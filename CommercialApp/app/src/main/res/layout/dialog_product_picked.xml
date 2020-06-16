@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="8dp"
+    android:paddingBottom="16dp">
+
+    <EditText
+        android:id="@+id/dialog_edit_quantity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:hint="count"
+        android:inputType="number"
+        android:textAlignment="textEnd" />
+
+    <TextView
+        android:id="@+id/dialog_textView_measurement"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="3"
+        android:textSize="20sp" />
+
+</LinearLayout>

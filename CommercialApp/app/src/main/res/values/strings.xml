@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Commercial App</string>
+    <string name="wrong_username_or_password">Pogrešno korisničko ime ili lozinka</string>
+    <string name="loading">Učitavanje</string>
+    <string name="basket_is_empty">Korpa je prazna</string>
+    <string name="choose_place_of_delivery">Odaberite mesto za dostavu</string>
+    <string name="notes">Napomena</string>
+    <string name="notes_hint">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="no_results">Nema rezultata</string>
+    <string name="price">cena</string>
+    <string name="rabat">rabat</string>
+    <string name="total">ukupno</string>
+    <string name="username">korsničko ime</string>
+    <string name="password">lozinka</string>
+    <string name="products">Proizvodi</string>
+    <string name="orders">Narudzbine</string>
+    <string name="logout">Odjava</string>
+    <string name="send">posalji narudzbenicu</string>
+    <string name="next">dalje</string>
+    <string name="searc_hint">Pretraga proizvoda</string>
+    <string name="error_order">Greška prilikom slanja porudžbine</string>
+    <string name="sent_order">Poslato</string>
+</resources>

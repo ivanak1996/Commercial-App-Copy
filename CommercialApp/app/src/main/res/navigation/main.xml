@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/productListScreenFragment">
+
+    <fragment android:id="@+id/productListScreenFragment"
+        android:name="com.example.commercialapp.fragments.ProductListFragment"
+        android:label=""
+        tools:layout="@layout/fragment_product_list"/>
+
+    <fragment android:id="@+id/anotherFragment"
+        android:name="com.example.commercialapp.fragments.OrderDetailsFragment"
+        android:label="order"
+        tools:layout="@layout/fragment_order_details"/>
+
+    <fragment android:id="@+id/orderExtraFragment"
+        android:name="com.example.commercialapp.fragments.OrderExtraFragment"
+        android:label="additional info"
+        tools:layout="@layout/fragment_order_extra"/>
+
+    <fragment android:id="@+id/orderHistoryFragment"
+        android:name="com.example.commercialapp.fragments.orderHistoryFragments.OrderHistoryFragment"
+        android:label="order history"
+        tools:layout="@layout/fragment_order_history"/>
+
+    <fragment android:id="@+id/orderHistoryDetailsFragment"
+        android:name="com.example.commercialapp.fragments.orderHistoryFragments.OrderHistoryDetailsFragment"
+        android:label="order history details"
+        tools:layout="@layout/fragment_order_history_details">
+        <argument
+            android:name="acKey"
+            app:argType="string"
+            android:defaultValue="0" />
+    </fragment>
+
+</navigation>
