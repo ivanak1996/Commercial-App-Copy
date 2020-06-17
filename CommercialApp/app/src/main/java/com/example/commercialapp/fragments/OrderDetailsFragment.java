@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +26,7 @@ import com.example.commercialapp.roomDatabase.orders.OrderViewModel;
 import com.example.commercialapp.roomDatabase.products.Product;
 import com.example.commercialapp.roomDatabase.products.ProductViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDetailsFragment extends Fragment implements GetOpenedOrderAsyncResponse {
@@ -34,6 +37,7 @@ public class OrderDetailsFragment extends Fragment implements GetOpenedOrderAsyn
     private RecyclerView orderDetailsRecyclerView;
     private long orderId;
     private TextView noDataInRecyclerView;
+    private List<Product> productList = new ArrayList<>();
 
     public OrderDetailsFragment() {
         setHasOptionsMenu(true);
@@ -50,6 +54,16 @@ public class OrderDetailsFragment extends Fragment implements GetOpenedOrderAsyn
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.next_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (productList.size() > 0) {
+            showMenu();
+        } else {
+            hideMenu();
+        }
     }
 
     @Override
@@ -74,6 +88,12 @@ public class OrderDetailsFragment extends Fragment implements GetOpenedOrderAsyn
         productViewModel.getAllProductsInOpenedOrder().observe(OrderDetailsFragment.this.getActivity(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
+                productList = products;
+                if (products.size() > 0) {
+                    showMenu();
+                } else {
+                    hideMenu();
+                }
                 productAdapter.setProducts(products);
                 productAdapter.notifyDataSetChanged();
                 refreshRecyclerViewAppearance();
@@ -86,6 +106,17 @@ public class OrderDetailsFragment extends Fragment implements GetOpenedOrderAsyn
         orderViewModel.getOpenedOrder(this);
 
         return view;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_next) {
+            if (!(productList.size() == 1 && productList.get(0).getQuantityInt() == 0)) {
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.orderExtraFragment);
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -107,5 +138,13 @@ public class OrderDetailsFragment extends Fragment implements GetOpenedOrderAsyn
             orderDetailsRecyclerView.setVisibility(View.VISIBLE);
             noDataInRecyclerView.setVisibility(View.GONE);
         }
+    }
+
+    private void hideMenu() {
+        setHasOptionsMenu(false);
+    }
+
+    private void showMenu() {
+        setHasOptionsMenu(true);
     }
 }

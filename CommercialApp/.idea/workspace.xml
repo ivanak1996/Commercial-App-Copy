@@ -166,23 +166,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/example/commercialapp/fragments/ProductListFragment.java</url>
-          <line>312</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/commercialapp/fragments/ProductListFragment.java</url>
           <line>225</line>
           <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/commercialapp/fragments/ProductListFragment.java</url>
-          <line>421</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/commercialapp/JsonParser.java</url>
-          <line>175</line>
-          <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/example/commercialapp/fragments/orderHistoryFragments/OrderHistoryDetailsFragment.java</url>
@@ -193,6 +178,21 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/example/commercialapp/fragments/orderHistoryFragments/OrderHistoryDetailsFragment.java</url>
           <line>58</line>
           <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/commercialapp/ProductListActivity.java</url>
+          <line>161</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/commercialapp/fragments/OrderDetailsFragment.java</url>
+          <line>123</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/commercialapp/fragments/OrderDetailsFragment.java</url>
+          <line>112</line>
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -160,8 +160,8 @@ public class ProductListActivity extends AppCompatActivity implements Navigation
                 break;
             }
             case R.id.action_next: {
-                Navigation.findNavController(this, R.id.nav_host_fragment)
-                        .navigate(R.id.orderExtraFragment);
+                /*Navigation.findNavController(this, R.id.nav_host_fragment)
+                        .navigate(R.id.orderExtraFragment);*/
             }
         }
 
