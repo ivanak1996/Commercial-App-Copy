@@ -177,7 +177,18 @@ public class ProductListActivity extends AppCompatActivity implements Navigation
     public void placeAnOrder(View view) {
         Spinner deliveryPlaceSpinner = findViewById(R.id.spinner_delivery_place);
         TextView notesTextView = findViewById(R.id.notes_textview);
-        OrderModel orderModel = new OrderModel(user.getId(), deliveryPlaceSpinner.getSelectedItem().toString(), notesTextView.getText().toString(), products);
+        TextView deliveryPlaceTextView = findViewById(R.id.text_view_delivery_place);
+        String ss = "";
+        if (deliveryPlaceSpinner.getSelectedItem() != null) {
+            ss = "" + deliveryPlaceSpinner.getSelectedItem();
+        } else {
+            if (!deliveryPlaceTextView.getText().toString().trim().equals("")) {
+                ss = deliveryPlaceTextView.getText().toString();
+            } else {
+                ss = user.getAcSubject();
+            }
+        }
+        OrderModel orderModel = new OrderModel(user.getAcSubject(), ss, notesTextView.getText().toString(), products);
         new PlaceAnOrderAsyncTask(user.getEmail(), user.getPassword(), orderModel, this).execute();
     }
 

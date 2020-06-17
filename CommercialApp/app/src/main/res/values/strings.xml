@@ -20,4 +20,5 @@
     <string name="searc_hint">Pretraga proizvoda</string>
     <string name="error_order">Greška prilikom slanja porudžbine</string>
     <string name="sent_order">Poslato</string>
+    <string name="delivery_place_single_choice">Mesto za dostavu:</string>
 </resources>

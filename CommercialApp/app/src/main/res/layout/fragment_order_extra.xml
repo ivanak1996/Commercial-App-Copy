@@ -23,6 +23,27 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/layout_delivery_place_single_choice"
+        android:paddingBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delivery_place_single_choice" />
+
+        <TextView
+            android:id="@+id/text_view_delivery_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Beograd" />
+
+    </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
