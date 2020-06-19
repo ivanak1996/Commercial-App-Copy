@@ -28,9 +28,12 @@ public class OrderedProductsAdapter extends RecyclerView.Adapter<OrderedProducts
     @Override
     public void onBindViewHolder(@NonNull ProductHolder holder, int position) {
         ProductHistoryModel currentProduct = products.get(position);
-        holder.textViewName.setText(currentProduct.getAcName());
-        holder.textViewPrice.setText(currentProduct.getAnPrice());
-        holder.textViewDate.setText(currentProduct.getAcIdent());
+        holder.textViewAcName.setText(currentProduct.getAcName());
+        holder.textViewAnQty.setText(currentProduct.getAnQty());
+        holder.textViewAcIdent.setText(currentProduct.getAcIdent());
+        holder.textViewAnPrice.setText(currentProduct.getAnPrice());
+        holder.textViewAnVat.setText(currentProduct.getAnVat());
+        //holder.textViewAcIdent.setText(currentProduct.getAcIdent());
     }
 
     @Override
@@ -44,16 +47,22 @@ public class OrderedProductsAdapter extends RecyclerView.Adapter<OrderedProducts
 
     class ProductHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewDate;
-        TextView textViewName;
-        TextView textViewPrice;
+        TextView textViewAcName;
+        TextView textViewAnQty;
+        TextView textViewAcIdent;
+        TextView textViewAnPrice;
+        TextView textViewAnVat;
+        TextView textViewTotal;
 
         public ProductHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewDate = itemView.findViewById(R.id.text_view_ordered_item_quant);
-            textViewName = itemView.findViewById(R.id.text_view_ordered_product_name);
-            textViewPrice = itemView.findViewById(R.id.text_view_ordered_item_price);
+            textViewAcName = itemView.findViewById(R.id.text_view_ordered_product_acName);
+            textViewAnQty = itemView.findViewById(R.id.text_view_ordered_item_anQty);
+            textViewAcIdent = itemView.findViewById(R.id.text_view_ordered_item_acIdent);
+            textViewAnPrice = itemView.findViewById(R.id.text_view_ordered_item_anPrice);
+            textViewAnVat = itemView.findViewById(R.id.text_view_ordered_item_anVat);
+            textViewTotal = itemView.findViewById(R.id.text_view_ordered_item_total);
         }
     }
 }

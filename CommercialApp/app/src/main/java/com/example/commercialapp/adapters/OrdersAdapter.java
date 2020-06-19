@@ -42,9 +42,10 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderHolde
     @Override
     public void onBindViewHolder(@NonNull OrderHolder holder, int position) {
         OrderHistoryModel currentOrder = orders.get(position);
-        holder.textViewName.setText(currentOrder.getBuyer());
-        holder.textViewPrice.setText(currentOrder.getPrice());
-        holder.textViewDate.setText(currentOrder.getDate());
+        holder.textViewAcKey.setText(currentOrder.getAcKey());
+        holder.textViewDeliverPlace.setText(currentOrder.getAcReceiver());
+        holder.textViewHistoryDate.setText(currentOrder.getAdDate());
+        holder.textViewHistoryPrice.setText(currentOrder.getAnForPay());
     }
 
     @Override
@@ -58,16 +59,18 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderHolde
 
     class OrderHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewDate;
-        TextView textViewName;
-        TextView textViewPrice;
+        TextView textViewAcKey;
+        TextView textViewHistoryDate;
+        TextView textViewDeliverPlace;
+        TextView textViewHistoryPrice;
 
         public OrderHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewDate = itemView.findViewById(R.id.text_view_order_date);
-            textViewName = itemView.findViewById(R.id.text_view_order_name);
-            textViewPrice = itemView.findViewById(R.id.text_view_order_price);
+            textViewAcKey = itemView.findViewById(R.id.text_view_history_acKey);
+            textViewHistoryDate = itemView.findViewById(R.id.text_view_history_date);
+            textViewDeliverPlace = itemView.findViewById(R.id.text_view_history_deliver_place);
+            textViewHistoryPrice = itemView.findViewById(R.id.text_view_history_cena);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -233,7 +233,7 @@ public class JsonParser {
                     String anPrice = o.getString("anPrice");
                     String anNo = o.getString("anNo");
                     String acName = o.getString("acName");
-                    String anQty = o.getString("acName");
+                    String anQty = o.getString("anQty");
                     String anVat = o.getString("anVat");
                     String acUM = o.getString("acUM");
                     products.add(new ProductHistoryModel(acIdent, anPrice, anNo, acName, anQty, anVat, acUM));

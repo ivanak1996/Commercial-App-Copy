@@ -3,6 +3,9 @@ package com.example.commercialapp.fragments.orderHistoryFragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -33,6 +36,17 @@ public class OrderHistoryDetailsFragment extends Fragment implements GetOrderIte
 
     public OrderHistoryDetailsFragment() {
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.history_details_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.history_details_menu_title);
+        TextView titleTextView = (TextView) menuItem.getActionView();
+        titleTextView.setPadding(0, 0, 50, 0);
+        titleTextView.setText(orderId);
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

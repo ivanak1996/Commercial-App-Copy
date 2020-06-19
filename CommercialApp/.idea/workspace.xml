@@ -36,6 +36,7 @@
         <option value="Class" />
         <option value="Interface" />
         <option value="layoutResourceFile_vertical" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -171,12 +172,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/example/commercialapp/fragments/orderHistoryFragments/OrderHistoryDetailsFragment.java</url>
-          <line>40</line>
+          <line>54</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/example/commercialapp/fragments/orderHistoryFragments/OrderHistoryDetailsFragment.java</url>
-          <line>58</line>
+          <line>72</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

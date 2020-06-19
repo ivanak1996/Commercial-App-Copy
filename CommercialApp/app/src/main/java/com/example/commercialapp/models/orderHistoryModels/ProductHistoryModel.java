@@ -1,5 +1,7 @@
 package com.example.commercialapp.models.orderHistoryModels;
 
+import java.text.DecimalFormat;
+
 public class ProductHistoryModel {
 
     private String acIdent;
@@ -18,6 +20,8 @@ public class ProductHistoryModel {
         this.anQty = anQty;
         this.anVat = anVat;
         this.acUM = acUM;
+
+        formatDecimals();
     }
 
 
@@ -47,5 +51,11 @@ public class ProductHistoryModel {
 
     public String getAcUM() {
         return acUM;
+    }
+
+    private void formatDecimals() {
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
+        anPrice = "" + formatter.format(Double.parseDouble(anPrice));
+        anQty = "" + formatter.format(Double.parseDouble(anQty));
     }
 }
