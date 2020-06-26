@@ -7,121 +7,127 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/product_list_loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading" />
-    </LinearLayout>
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--refreshable-->
-        <ScrollView
+        <LinearLayout
+            android:id="@+id/product_list_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading" />
+        </LinearLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <!--refreshable-->
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <!--search bar-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <SearchView
-                        android:id="@+id/search_view_products"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="5"
-                        android:iconifiedByDefault="false"
-                        android:imeOptions="flagNoExtractUi"
-                        android:paddingLeft="12dp"
-                        android:queryHint="@string/searc_hint"
-                        android:searchIcon="@null"
-                        android:visibility="visible" />
-
-                    <ImageButton
-                        android:id="@+id/imageView_search"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:paddingTop="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="8dp"
-                        android:src="@drawable/ic_search" />
-
-                </LinearLayout>
-
-                <!--list with loaded items-->
-                <LinearLayout
-                    android:id="@+id/product_list_loaded"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <!--search bar-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <SearchView
+                            android:id="@+id/search_view_products"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="5"
+                            android:iconifiedByDefault="false"
+                            android:imeOptions="flagNoExtractUi"
+                            android:paddingLeft="12dp"
+                            android:queryHint="@string/searc_hint"
+                            android:searchIcon="@null"
+                            android:visibility="visible" />
+
+                        <ImageButton
+                            android:id="@+id/imageView_search"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="8dp"
+                            android:src="@drawable/ic_search" />
+
+                    </LinearLayout>
 
                     <!--list with loaded items-->
                     <LinearLayout
-                        android:id="@+id/layout_productList"
+                        android:id="@+id/product_list_loaded"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recycler_view_productsList"
+                        <!--list with loaded items-->
+                        <LinearLayout
+                            android:id="@+id/layout_productList"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="10"
-                            tools:listitem="@layout/product_list_item" />
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-                        <include
-                            android:id="@+id/list_item_loading"
-                            layout="@layout/product_list_item_loading"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:visibility="gone" />
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycler_view_productsList"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="10"
+                                tools:listitem="@layout/product_list_item" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
+            </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-                <TextView
-                    android:id="@+id/empty_search_results"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/no_results"
-                    android:visibility="gone" />
+        <include
+            android:id="@+id/list_item_loading"
+            layout="@layout/product_list_item_loading"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone" />
 
-                <!--error screen-->
-                <include
-                    android:id="@+id/error_screen"
-                    layout="@layout/layout_error_screen"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
+        <TextView
+            android:id="@+id/empty_search_results"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/no_results"
+            android:visibility="gone" />
 
-            </LinearLayout>
-        </ScrollView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <!--error screen-->
+        <include
+            android:id="@+id/error_screen"
+            layout="@layout/layout_error_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+    </FrameLayout>
 </LinearLayout>

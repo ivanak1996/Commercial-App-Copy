@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:gravity="center"
-    android:background="@color/colorAccent">
+    android:gravity="center">
 
     <TextView
         android:id="@+id/error_message_text_view"
