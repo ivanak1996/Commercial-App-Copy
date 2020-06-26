@@ -8,12 +8,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.commercialapp.JsonParser;
 import com.example.commercialapp.ProductListActivity;
@@ -32,7 +34,12 @@ public class OrderHistoryDetailsFragment extends Fragment implements GetOrderIte
     private String orderId;
     private OrderedProductsAdapter productsAdapter;
     private RecyclerView ordersHistoryRecyclerView;
+
     private TextView noDataInRecyclerView;
+    private TextView errorTextView;
+    private LinearLayout loadingLayout;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public OrderHistoryDetailsFragment() {
         setHasOptionsMenu(true);
@@ -58,6 +65,8 @@ public class OrderHistoryDetailsFragment extends Fragment implements GetOrderIte
 
         // display for empty basket
         noDataInRecyclerView = view.findViewById(R.id.empty_order_history_details);
+        loadingLayout = view.findViewById(R.id.product_history_details_loading);
+        errorTextView = view.findViewById(R.id.error_order_history_details);
 
         ordersHistoryRecyclerView = view.findViewById(R.id.recycler_view_order_history_details);
         ordersHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -65,7 +74,46 @@ public class OrderHistoryDetailsFragment extends Fragment implements GetOrderIte
 
         productsAdapter = new OrderedProductsAdapter();
         ordersHistoryRecyclerView.setAdapter(productsAdapter);
+
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_history_details);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                setLoadingLayout();
+                new OrderHistoryDetailsFragment.GetOrderHistoryDetailsFromApiAsyncTask(OrderHistoryDetailsFragment.this, user.getEmail(), user.getPassword(), orderId).execute();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         return view;
+    }
+
+    private void setHasErrorLayout() {
+        ordersHistoryRecyclerView.setVisibility(View.GONE);
+        errorTextView.setVisibility(View.VISIBLE);
+        noDataInRecyclerView.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.GONE);
+    }
+
+    private void setNoDataLayout() {
+        ordersHistoryRecyclerView.setVisibility(View.GONE);
+        errorTextView.setVisibility(View.GONE);
+        noDataInRecyclerView.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.GONE);
+    }
+
+    private void setHasDataLayout() {
+        ordersHistoryRecyclerView.setVisibility(View.VISIBLE);
+        errorTextView.setVisibility(View.GONE);
+        noDataInRecyclerView.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.GONE);
+    }
+
+    private void setLoadingLayout() {
+        ordersHistoryRecyclerView.setVisibility(View.GONE);
+        errorTextView.setVisibility(View.GONE);
+        noDataInRecyclerView.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -73,11 +121,9 @@ public class OrderHistoryDetailsFragment extends Fragment implements GetOrderIte
         productsAdapter.setProducts(products);
         productsAdapter.notifyDataSetChanged();
         if (products.size() == 0) {
-            ordersHistoryRecyclerView.setVisibility(View.GONE);
-            noDataInRecyclerView.setVisibility(View.VISIBLE);
+            setNoDataLayout();
         } else {
-            noDataInRecyclerView.setVisibility(View.GONE);
-            ordersHistoryRecyclerView.setVisibility(View.VISIBLE);
+            setHasDataLayout();
         }
     }
 

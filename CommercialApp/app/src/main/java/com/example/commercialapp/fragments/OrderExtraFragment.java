@@ -79,7 +79,7 @@ public class OrderExtraFragment extends Fragment {
                     TextView textViewDeliveryPlace = view.findViewById(R.id.text_view_delivery_place);
                     String deliveryPlace = "";
                     if (deliveryPlaces.size() == 1) {
-                        deliveryPlace += (deliveryPlaces.get(0).getAcSubject());
+                        deliveryPlace += (deliveryPlaces.get(0).getAcName2());
                     } else {
                         deliveryPlace += ((ProductListActivity) getActivity()).getUser().getAcSubject();
                     }

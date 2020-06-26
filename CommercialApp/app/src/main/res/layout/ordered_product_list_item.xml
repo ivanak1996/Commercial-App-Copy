@@ -48,29 +48,27 @@
                 <TextView
                     android:id="@+id/text_view_ordered_item_acIdent"
                     android:text="acIdent"
-                    android:textSize="18sp"
                     android:layout_weight="2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"/>
                 <TextView
                     android:id="@+id/text_view_ordered_item_anPrice"
                     android:text="anPrice"
-                    android:textSize="18sp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"/>
                 <TextView
                     android:id="@+id/text_view_ordered_item_anVat"
                     android:text="anVat"
-                    android:textSize="18sp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"/>
                 <TextView
                     android:id="@+id/text_view_ordered_item_total"
                     android:text="total"
-                    android:textSize="18sp"
                     android:layout_weight="1"
+                    android:layout_gravity="end"
+                    android:textAlignment="textEnd"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"/>
             </LinearLayout>

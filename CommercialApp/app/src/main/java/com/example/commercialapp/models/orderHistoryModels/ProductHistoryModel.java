@@ -11,8 +11,12 @@ public class ProductHistoryModel {
     private String anQty;
     private String anVat;
     private String acUM;
+    private String acKey;
+    private String anRebate;
 
-    public ProductHistoryModel(String acIdent, String anPrice, String anNo, String acName, String anQty, String anVat, String acUM) {
+    private String total;
+
+    public ProductHistoryModel(String acIdent, String anPrice, String anNo, String acName, String anQty, String anVat, String acUM, String acKey, String anRebate) {
         this.acIdent = acIdent;
         this.anPrice = anPrice;
         this.anNo = anNo;
@@ -20,7 +24,10 @@ public class ProductHistoryModel {
         this.anQty = anQty;
         this.anVat = anVat;
         this.acUM = acUM;
+        this.acKey = acKey;
+        this.anRebate = anRebate;
 
+        calculateTotal();
         formatDecimals();
     }
 
@@ -51,6 +58,21 @@ public class ProductHistoryModel {
 
     public String getAcUM() {
         return acUM;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    private void calculateTotal() {
+        //double totalPrice = kolcina*cena*(1-anrebat/100)*(1+anVat/100);
+        double kolcina = Double.parseDouble(anQty);
+        double cena = Double.parseDouble(anPrice);
+        double anrebat = Double.parseDouble(anRebate);
+        double anVatt = Double.parseDouble(anVat);
+        double totalPrice = kolcina * cena * (1 - anrebat / 100) * (1 + anVatt / 100);
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
+        total = "" + formatter.format(totalPrice);
     }
 
     private void formatDecimals() {

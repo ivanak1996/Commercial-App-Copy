@@ -236,7 +236,9 @@ public class JsonParser {
                     String anQty = o.getString("anQty");
                     String anVat = o.getString("anVat");
                     String acUM = o.getString("acUM");
-                    products.add(new ProductHistoryModel(acIdent, anPrice, anNo, acName, anQty, anVat, acUM));
+                    String acKey = o.getString("acKey");
+                    String anRebate = o.getString("anRebate");
+                    products.add(new ProductHistoryModel(acIdent, anPrice, anNo, acName, anQty, anVat, acUM, acKey, anRebate));
                 }
 
             } catch (JSONException e) {

@@ -4,22 +4,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.*;
 import androidx.navigation.ui.*;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.commercialapp.asyncResponses.GetOpenedOrderAsyncResponse;
 import com.example.commercialapp.asyncResponses.PlaceAnOrderAsyncResponse;
+import com.example.commercialapp.fragments.DatePickerFragment;
 import com.example.commercialapp.models.OrderModel;
 import com.example.commercialapp.roomDatabase.deliveryPlaces.DeliveryPlaceViewModel;
 import com.example.commercialapp.roomDatabase.orders.Order;
@@ -32,12 +36,14 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ProductListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PlaceAnOrderAsyncResponse {
+public class ProductListActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, NavigationView.OnNavigationItemSelectedListener, PlaceAnOrderAsyncResponse {
 
     public static final String EXTRA_USER = "EXTRA_USER";
 
@@ -185,10 +191,10 @@ public class ProductListActivity extends AppCompatActivity implements Navigation
             if (!deliveryPlaceTextView.getText().toString().trim().equals("")) {
                 ss = deliveryPlaceTextView.getText().toString();
             } else {
-                ss = user.getAcSubject();
+                ss = user.getAcName2();
             }
         }
-        OrderModel orderModel = new OrderModel(user.getAcSubject(), ss, notesTextView.getText().toString(), products);
+        OrderModel orderModel = new OrderModel(user.getAcName2(), ss, notesTextView.getText().toString(), products);
         new PlaceAnOrderAsyncTask(user.getEmail(), user.getPassword(), orderModel, this).execute();
     }
 
@@ -207,6 +213,24 @@ public class ProductListActivity extends AppCompatActivity implements Navigation
         } else {
             Toast.makeText(this, R.string.error_order, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void onClickSummonDatePicker(View view) {
+        DialogFragment datePickerFragment = new DatePickerFragment();
+        datePickerFragment.show(getSupportFragmentManager(), "date picker");
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        String currDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime());
+        TextView textViewDate = findViewById(R.id.text_view_delivery_date);
+        textViewDate.setText(currDate);
+
     }
 
     private static class PlaceAnOrderAsyncTask extends AsyncTask<Void, Void, Boolean> {

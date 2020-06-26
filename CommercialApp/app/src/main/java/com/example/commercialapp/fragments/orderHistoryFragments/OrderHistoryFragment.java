@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.commercialapp.JsonParser;
 import com.example.commercialapp.ProductListActivity;
@@ -33,7 +35,12 @@ public class OrderHistoryFragment extends Fragment implements GetOrdersAsyncResp
     private User user;
     private OrdersAdapter ordersAdapter;
     private RecyclerView ordersHistoryRecyclerView;
+
     private TextView noDataInRecyclerView;
+    private TextView errorTextView;
+    private LinearLayout loadingLayout;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public OrderHistoryFragment() {
         setHasOptionsMenu(true);
@@ -60,6 +67,8 @@ public class OrderHistoryFragment extends Fragment implements GetOrdersAsyncResp
 
         // display for empty basket
         noDataInRecyclerView = view.findViewById(R.id.empty_order_history);
+        loadingLayout = view.findViewById(R.id.product_history_loading);
+        errorTextView = view.findViewById(R.id.error_order_history);
 
         ordersHistoryRecyclerView = view.findViewById(R.id.recycler_view_order_history);
         ordersHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -76,13 +85,57 @@ public class OrderHistoryFragment extends Fragment implements GetOrdersAsyncResp
             }
         });
         ordersHistoryRecyclerView.setAdapter(ordersAdapter);
+
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_history);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                setLoadingLayout();
+                new GetOrderHistoryFromApiAsyncTask(OrderHistoryFragment.this, user.getEmail(), user.getPassword()).execute();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         return view;
+    }
+
+    private void setHasErrorLayout() {
+        ordersHistoryRecyclerView.setVisibility(View.GONE);
+        errorTextView.setVisibility(View.VISIBLE);
+        noDataInRecyclerView.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.GONE);
+    }
+
+    private void setNoDataLayout() {
+        ordersHistoryRecyclerView.setVisibility(View.GONE);
+        errorTextView.setVisibility(View.GONE);
+        noDataInRecyclerView.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.GONE);
+    }
+
+    private void setHasDataLayout() {
+        ordersHistoryRecyclerView.setVisibility(View.VISIBLE);
+        errorTextView.setVisibility(View.GONE);
+        noDataInRecyclerView.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.GONE);
+    }
+
+    private void setLoadingLayout() {
+        ordersHistoryRecyclerView.setVisibility(View.GONE);
+        errorTextView.setVisibility(View.GONE);
+        noDataInRecyclerView.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void finish(List<OrderHistoryModel> orders) {
         ordersAdapter.setOrders(orders);
         ordersAdapter.notifyDataSetChanged();
+        if (orders.size() == 0) {
+            setNoDataLayout();
+        } else {
+            setHasDataLayout();
+        }
     }
 
     private static class GetOrderHistoryFromApiAsyncTask extends AsyncTask<Void, Void, List<OrderHistoryModel>> {

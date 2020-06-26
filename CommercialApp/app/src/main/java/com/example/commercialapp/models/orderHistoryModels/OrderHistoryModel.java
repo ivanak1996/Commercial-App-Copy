@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class OrderHistoryModel {
     private String acReceiver;
@@ -25,7 +26,7 @@ public class OrderHistoryModel {
         String pattern = "dd.MM.yyyy.";
 
         String strDate = adDate;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS.ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS.ss");
         try {
             Date convertedDate = dateFormat.parse(strDate);
             SimpleDateFormat sdfnewformat = new SimpleDateFormat(pattern);

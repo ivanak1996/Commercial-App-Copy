@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/choose_place_of_delivery" />
@@ -20,6 +21,40 @@
             android:id="@+id/spinner_delivery_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_delivery_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_delivery_date" />
+
+        <LinearLayout
+            android:paddingLeft="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/text_view_delivery_date"
+                android:text="24 JUN 2020"
+                android:textSize="18sp"
+                android:paddingRight="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:text="promeni"
+                android:onClick="onClickSummonDatePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -45,6 +80,7 @@
     </LinearLayout>
 
     <TextView
+        android:textSize="16sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/notes" />

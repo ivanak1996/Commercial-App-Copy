@@ -14,7 +14,7 @@ import com.example.commercialapp.models.orderHistoryModels.ProductHistoryModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderedProductsAdapter extends RecyclerView.Adapter<OrderedProductsAdapter.ProductHolder>{
+public class OrderedProductsAdapter extends RecyclerView.Adapter<OrderedProductsAdapter.ProductHolder> {
     private List<ProductHistoryModel> products = new ArrayList<>();
 
     @NonNull
@@ -33,6 +33,7 @@ public class OrderedProductsAdapter extends RecyclerView.Adapter<OrderedProducts
         holder.textViewAcIdent.setText(currentProduct.getAcIdent());
         holder.textViewAnPrice.setText(currentProduct.getAnPrice());
         holder.textViewAnVat.setText(currentProduct.getAnVat());
+        holder.textViewTotal.setText(currentProduct.getTotal());
         //holder.textViewAcIdent.setText(currentProduct.getAcIdent());
     }
 
