@@ -10,7 +10,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.*;
 import androidx.navigation.ui.*;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,10 +23,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.commercialapp.asyncResponses.GetOpenedOrderAsyncResponse;
 import com.example.commercialapp.asyncResponses.PlaceAnOrderAsyncResponse;
 import com.example.commercialapp.fragments.DatePickerFragment;
 import com.example.commercialapp.models.OrderModel;
+import com.example.commercialapp.roomDatabase.deliveryPlaces.DeliveryPlace;
 import com.example.commercialapp.roomDatabase.deliveryPlaces.DeliveryPlaceViewModel;
 import com.example.commercialapp.roomDatabase.orders.Order;
 import com.example.commercialapp.roomDatabase.orders.OrderViewModel;
@@ -55,6 +57,7 @@ public class ProductListActivity extends AppCompatActivity implements DatePicker
     private NavigationView navigationView;
     private AppBarConfiguration appBarConfiguration;
     private User user;
+    private String pickedDeliveryPlace;
 
     private List<Product> products;
 
@@ -90,6 +93,10 @@ public class ProductListActivity extends AppCompatActivity implements DatePicker
 
     public User getUser() {
         return user;
+    }
+
+    public void setPickedDeliveryPlace(String pickedDeliveryPlace) {
+        this.pickedDeliveryPlace = pickedDeliveryPlace;
     }
 
     private void init() {
@@ -181,38 +188,55 @@ public class ProductListActivity extends AppCompatActivity implements DatePicker
     }
 
     public void placeAnOrder(View view) {
-        Spinner deliveryPlaceSpinner = findViewById(R.id.spinner_delivery_place);
         TextView notesTextView = findViewById(R.id.notes_textview);
-        TextView deliveryPlaceTextView = findViewById(R.id.text_view_delivery_place);
+        TextView deliveryPlaceDate = findViewById(R.id.text_view_delivery_date);
+
         String ss = "";
-        if (deliveryPlaceSpinner.getSelectedItem() != null) {
-            ss = "" + deliveryPlaceSpinner.getSelectedItem();
-        } else {
-            if (!deliveryPlaceTextView.getText().toString().trim().equals("")) {
-                ss = deliveryPlaceTextView.getText().toString();
-            } else {
-                ss = user.getAcName2();
-            }
+        if (pickedDeliveryPlace != null) {
+            ss += pickedDeliveryPlace;
         }
-        OrderModel orderModel = new OrderModel(user.getAcName2(), ss, notesTextView.getText().toString(), products);
+
+        OrderModel orderModel = new OrderModel(user.getId(), ss, notesTextView.getText().toString(), deliveryPlaceDate.getText().toString(), products);
         new PlaceAnOrderAsyncTask(user.getEmail(), user.getPassword(), orderModel, this).execute();
     }
 
     @Override
-    public void processFinish(boolean success) {
-        if (success) {
+    public void processFinish(String result) {
+        if (result != null) {
             productViewModel.deleteAll();
             orderViewModel.deleteAll();
-            NavOptions navOptions = new NavOptions.Builder()
-                    .setPopUpTo(R.id.main, false)
-                    .build();
-            Navigation.findNavController(this, R.id.nav_host_fragment)
-                    .navigate(R.id.productListScreenFragment, null, navOptions);
-            Toast.makeText(this, R.string.sent_order, Toast.LENGTH_SHORT).show();
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Poslato")
+                    .setMessage("Porudzbina poslata sa brojem " + result)
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finishOrder();
+                        }
+                    })
+                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            finishOrder();
+                        }
+                    })
+                    .show();
+
             orderViewModel.insert(new Order(Order.STATUS_OPEN, new Date(System.currentTimeMillis())));
         } else {
             Toast.makeText(this, R.string.error_order, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void finishOrder() {
+        NavOptions navOptions = new NavOptions.Builder()
+                .setPopUpTo(R.id.main, false)
+                .build();
+        Navigation.findNavController(ProductListActivity.this, R.id.nav_host_fragment)
+                .navigate(R.id.productListScreenFragment, null, navOptions);
+        //Toast.makeText(ProductListActivity.this, R.string.sent_order, Toast.LENGTH_SHORT).show();
     }
 
     public void onClickSummonDatePicker(View view) {
@@ -233,7 +257,7 @@ public class ProductListActivity extends AppCompatActivity implements DatePicker
 
     }
 
-    private static class PlaceAnOrderAsyncTask extends AsyncTask<Void, Void, Boolean> {
+    private static class PlaceAnOrderAsyncTask extends AsyncTask<Void, Void, String> {
 
         private PlaceAnOrderAsyncResponse delegate;
         private String username;
@@ -248,13 +272,13 @@ public class ProductListActivity extends AppCompatActivity implements DatePicker
         }
 
         @Override
-        protected Boolean doInBackground(Void... voids) {
+        protected String doInBackground(Void... voids) {
             return JsonParser.sendOrderData(username, password, orderModel);
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            delegate.processFinish(aBoolean);
+        protected void onPostExecute(String aString) {
+            delegate.processFinish(aString);
         }
     }
 }

@@ -16,16 +16,19 @@ public class OrderModel {
     public static final String NOTE = "napomena";
     public static final String HEADER = "zaglavlje";
     public static final String ITEMS = "stavke";
+    public static final String DATE = "datum";
 
     private String buyer;
     private String deliveryPlace;
     private String note;
+    private String date;
     private List<Product> productList;
 
-    public OrderModel(String buyer, String deliveryPlace, String note, List<Product> productList) {
+    public OrderModel(String buyer, String deliveryPlace, String note, String date, List<Product> productList) {
         this.buyer = buyer;
         this.deliveryPlace = deliveryPlace;
         this.note = note;
+        this.date = date;
         this.productList = productList;
 
     }
@@ -47,6 +50,7 @@ public class OrderModel {
         header.put(BUYER, buyer);
         header.put(DELIVERY_PLACE, deliveryPlace);
         header.put(NOTE, note);
+        header.put(DATE, date);
 
         result.put(HEADER, header);
         result.put(ITEMS, jsonItems);

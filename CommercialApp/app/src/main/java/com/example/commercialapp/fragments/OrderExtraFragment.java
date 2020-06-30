@@ -20,8 +20,11 @@ import com.example.commercialapp.ProductListActivity;
 import com.example.commercialapp.R;
 import com.example.commercialapp.roomDatabase.deliveryPlaces.DeliveryPlace;
 import com.example.commercialapp.roomDatabase.deliveryPlaces.DeliveryPlaceViewModel;
+import com.example.commercialapp.roomDatabase.user.User;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class OrderExtraFragment extends Fragment {
@@ -53,7 +56,7 @@ public class OrderExtraFragment extends Fragment {
         deliveryPlacesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                selectDeliveryPlaceFromSpinner();
             }
 
             @Override
@@ -73,15 +76,20 @@ public class OrderExtraFragment extends Fragment {
                     ArrayAdapter<DeliveryPlace> spinnerArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, deliveryPlaces);
                     spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     deliveryPlacesSpinner.setAdapter(spinnerArrayAdapter);
+                    selectDeliveryPlaceFromSpinner();
                 } else {
                     deliveryPlacesSingleChoiceLayout.setVisibility(View.VISIBLE);
                     deliveryPlacesLayout.setVisibility(View.GONE);
                     TextView textViewDeliveryPlace = view.findViewById(R.id.text_view_delivery_place);
                     String deliveryPlace = "";
                     if (deliveryPlaces.size() == 1) {
-                        deliveryPlace += (deliveryPlaces.get(0).getAcName2());
+                        DeliveryPlace place = deliveryPlaces.get(0);
+                        deliveryPlace += place.getAcName2();
+                        selectDeliveryPlaceString(place.getAcSubject());
                     } else {
-                        deliveryPlace += ((ProductListActivity) getActivity()).getUser().getAcSubject();
+                        User user = ((ProductListActivity) getActivity()).getUser();
+                        deliveryPlace += user.getAcSubject();
+                        selectDeliveryPlaceString(user.getId());
                     }
 
                     textViewDeliveryPlace.setText(deliveryPlace);
@@ -89,6 +97,23 @@ public class OrderExtraFragment extends Fragment {
             }
         });
 
+        TextView deliveryDateTextView = view.findViewById(R.id.text_view_delivery_date);
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0); // same for minutes and seconds
+        String currDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(today.getTime());
+        deliveryDateTextView.setText(currDate);
+
         return view;
+    }
+
+    private void selectDeliveryPlaceString(String deliveryPlace) {
+        ((ProductListActivity) OrderExtraFragment.this.getActivity()).setPickedDeliveryPlace(deliveryPlace);
+    }
+
+    private void selectDeliveryPlaceFromSpinner() {
+        DeliveryPlace selectedPlace = (DeliveryPlace) deliveryPlacesSpinner.getSelectedItem();
+        if (selectedPlace != null) {
+            ((ProductListActivity) OrderExtraFragment.this.getActivity()).setPickedDeliveryPlace(selectedPlace.getAnQId());
+        }
     }
 }

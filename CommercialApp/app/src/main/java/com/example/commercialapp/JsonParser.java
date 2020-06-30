@@ -27,7 +27,7 @@ public class JsonParser {
     static JSONObject jObj = null;
     static String json = "";
 
-    public static boolean sendOrderData(String userEmail, String userPassword, OrderModel orderModel) {
+    public static String sendOrderData(String userEmail, String userPassword, OrderModel orderModel) {
 
         String charset = "UTF-8";
         String action = "order";
@@ -39,7 +39,7 @@ public class JsonParser {
             data = jsonData.toString();
         } catch (JSONException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
 
         try {
@@ -50,18 +50,24 @@ public class JsonParser {
                     URLEncoder.encode(data, charset));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
 
         JSONObject result = getJSONFromUrlQuery(API_URL, query);
 
         try {
-            if (result != null && result.get("acKey") != null) return true;
+            //if (result != null && result.get("acKey") != null) return true;
+            if (result != null) {
+                Object acKey = result.get("acKey");
+                if (acKey != null) {
+                    return acKey.toString();
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return false;
+        return null;
     }
 
     public static String getJSONFromUrlStrQuery(String url, String q) throws IOException {

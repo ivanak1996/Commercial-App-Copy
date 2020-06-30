@@ -281,6 +281,7 @@ public class ProductListFragment extends Fragment implements ProductListAsyncRes
         productListAdapter.setProducts(new ArrayList<Product>());
         new GetProductListFromApiAsyncTask(ProductListFragment.this, user.getEmail(), user.getPassword(),
                 query, getSpinnerSelectedItemAsSting(), 1, SEARCH_RESULTS_DEFAULT).execute();
+        productListRecyclerView.scrollToPosition(0);
     }
 
     private void setStateLoading() {

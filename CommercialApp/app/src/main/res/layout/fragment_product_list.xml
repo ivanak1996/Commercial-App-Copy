@@ -36,9 +36,6 @@
             android:layout_height="match_parent">
 
             <!--refreshable-->
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -93,8 +90,7 @@
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recycler_view_productsList"
                                 android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="10"
+                                android:layout_height="match_parent"
                                 tools:listitem="@layout/product_list_item" />
 
                         </LinearLayout>
@@ -102,7 +98,6 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </ScrollView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <include
